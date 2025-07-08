@@ -12,6 +12,10 @@ const PageContainer = styled.div`
   overflow: hidden;
   padding-top: 100px;
   scroll-behavior: smooth;
+
+  @media (max-width: 768px) {
+    padding-top: 140px; /* Extra padding for mobile header */
+  }
 `;
 
 const ContentWrapper = styled.div`

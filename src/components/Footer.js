@@ -136,38 +136,38 @@ const Footer = () => {
 
   return (
     <>
-      <FooterContainer>
-        <FooterContent>
-          <FooterSection>
-            <h3>About</h3>
+    <FooterContainer>
+      <FooterContent>
+        <FooterSection>
+          <h3>About</h3>
             <FooterButton onClick={() => navigate('/about')}>About Me</FooterButton>
             <FooterButton onClick={() => navigate('/itinerary')}>Travel Itinerary</FooterButton>
             <FooterButton onClick={() => navigate('/photos')}>Photo Gallery</FooterButton>
-          </FooterSection>
-          <FooterSection>
-            <h3>Connect</h3>
+        </FooterSection>
+        <FooterSection>
+          <h3>Connect</h3>
             <FooterButton onClick={handleContactClick}>Contact Me</FooterButton>
             <FooterButton onClick={handleSubscribeClick}>Subscribe</FooterButton>
-            <SocialLinks>
+          <SocialLinks>
               <FooterLink href="https://instagram.com/cam.lipp" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <SocialIcon icon={faInstagram} />
-              </FooterLink>
+              <SocialIcon icon={faInstagram} />
+            </FooterLink>
               <FooterLink href="https://www.linkedin.com/in/cameron-lipp" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <SocialIcon icon={faLinkedin} />
-              </FooterLink>
-            </SocialLinks>
-          </FooterSection>
-          <FooterSection>
-            <h3>Resources</h3>
+            </FooterLink>
+          </SocialLinks>
+        </FooterSection>
+        <FooterSection>
+          <h3>Resources</h3>
             <FooterLink href="https://www.semesteratsea.org/top-ten-things-sas-alumni-wish-they-knew-before-sailing/" target="_blank" rel="noopener noreferrer">Travel Tips</FooterLink>
             <FooterLink href="https://www.semesteratsea.org/experience/ship/packing-list/" target="_blank" rel="noopener noreferrer">Packing List</FooterLink>
             <FooterLink href="https://www.semesteratsea.org/resource/faq-admissions/" target="_blank" rel="noopener noreferrer">SAS FAQs</FooterLink>
-          </FooterSection>
-        </FooterContent>
-        <Copyright>
-          © {new Date().getFullYear()} Cam's Semester at Sea. All rights reserved.
-        </Copyright>
-      </FooterContainer>
+        </FooterSection>
+      </FooterContent>
+      <Copyright>
+        © {new Date().getFullYear()} Cam's Semester at Sea. All rights reserved.
+      </Copyright>
+    </FooterContainer>
       
       {/* Newsletter component outside footer for better z-index */}
       <Newsletter isOpen={showNewsletter} onClose={() => setShowNewsletter(false)} />

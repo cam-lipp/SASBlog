@@ -7,6 +7,10 @@ const AboutContainer = styled.div`
   min-height: 100vh;
   position: relative;
   padding: 7rem 0 2rem; /* Top padding to account for fixed header */
+
+  @media (max-width: 768px) {
+    padding: 9rem 0 2rem; /* Extra padding for mobile header */
+  }
 `;
 
 const AboutContent = styled.div`
@@ -23,6 +27,10 @@ const Title = styled(motion.h1)`
   text-align: center;
   margin-bottom: 1rem;
   font-family: 'Playfair Display', serif;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Subtitle = styled(motion.p)`

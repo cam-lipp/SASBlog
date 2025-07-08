@@ -17,6 +17,10 @@ const HeaderContainer = styled.header`
     background: rgba(255, 255, 255, 0.9);
     box-shadow: var(--shadow-sm);
   }
+
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
 `;
 
 const HeaderContent = styled.div`
@@ -26,6 +30,12 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -41,11 +51,24 @@ const Logo = styled(Link)`
   &:hover {
     opacity: 0.8;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const NavLink = styled(Link)`
@@ -73,6 +96,11 @@ const NavLink = styled(Link)`
     &::after {
       width: 100%;
     }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    white-space: nowrap;
   }
 `;
 

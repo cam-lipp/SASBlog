@@ -14,6 +14,11 @@ const HeroContainer = styled.div`
   overflow: hidden;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 80vh;
+    min-height: 500px;
+  }
 `;
 
 const Sun = styled.div`
@@ -138,6 +143,10 @@ const WaveOverlay = styled.div`
   z-index: 1;
   animation: wave 20s linear infinite;
   opacity: 0.9;
+
+  @media (max-width: 768px) {
+    height: 120px;
+  }
 
   @keyframes wave {
     0% { background-position-x: 0; }
@@ -279,6 +288,14 @@ const CruiseShip = styled(motion.div)`
   transform-origin: center;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
 
+  @media (max-width: 768px) {
+    bottom: 80px;
+    width: 200px;
+    height: 130px;
+    left: -200px;
+    animation: cruiseAcrossMobile 25s linear infinite;
+  }
+
   /* Ship body */
   &::before {
     content: '';
@@ -404,6 +421,24 @@ const CruiseShip = styled(motion.div)`
     }
     100% {
       transform: translateX(calc(200vw - 560px)) rotate(0deg) translateY(0);
+    }
+  }
+
+  @keyframes cruiseAcrossMobile {
+    0% {
+      transform: translateX(0) rotate(0deg) translateY(0);
+    }
+    25% {
+      transform: translateX(calc(50vw - 100px)) rotate(2deg) translateY(-8px);
+    }
+    50% {
+      transform: translateX(calc(100vw - 200px)) rotate(-1deg) translateY(0);
+    }
+    75% {
+      transform: translateX(calc(150vw - 300px)) rotate(1deg) translateY(-12px);
+    }
+    100% {
+      transform: translateX(calc(200vw - 400px)) rotate(0deg) translateY(0);
     }
   }
 

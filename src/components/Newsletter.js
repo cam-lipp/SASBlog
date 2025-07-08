@@ -144,7 +144,7 @@ const Newsletter = ({ isOpen, onClose }) => {
 
       // Save email to Contentful
       await saveEmailSubscriber(email);
-      
+
       // Mark that user has seen the newsletter
       sessionStorage.setItem('hasSeenNewsletter', 'true');
       
@@ -170,13 +170,13 @@ const Newsletter = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-        {isOpen && (
-          <NewsletterOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={handleOverlayClick}
-          >
+      {isOpen && (
+        <NewsletterOverlay
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={handleOverlayClick}
+        >
           <NewsletterModal
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -222,9 +222,9 @@ const Newsletter = ({ isOpen, onClose }) => {
             </AnimatePresence>
           </NewsletterModal>
         </NewsletterOverlay>
-              )}
-      </AnimatePresence>
-    );
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default Newsletter;
