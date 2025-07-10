@@ -125,7 +125,7 @@ const Header = () => {
           <NavLink to="/itinerary">Itinerary</NavLink>
           <NavLink to="/trips">Trips</NavLink>
           <NavLink to="/blog">Blog</NavLink>
-          <NavLink to="/gallery">Gallery</NavLink>
+          <NavLink to="/photos">Gallery</NavLink>
         </Nav>
       </HeaderContent>
     </HeaderContainer>
