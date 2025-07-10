@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import WaveBackground from './WaveBackground';
 import { useContentful } from '../hooks/useContentful';
-import { contentTypes, formatDateRange, isTripCurrent } from '../config/contentful';
+import { contentTypes, formatDateRange, isTripCurrent, safeDateParse } from '../config/contentful';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -327,8 +327,8 @@ const Itinerary = () => {
       date: formatDateRange(startDate, endDate),
       shortDescription: trip.fields.shortDescription,
       isCurrent,
-      startDate: new Date(startDate),
-      endDate: endDate ? new Date(endDate) : null
+      startDate: safeDateParse(startDate),
+      endDate: endDate ? safeDateParse(endDate) : null
     };
   }).sort((a, b) => a.startDate - b.startDate) : [];
 
@@ -357,13 +357,18 @@ const Itinerary = () => {
               let isAtSea = false;
               
               if (nextTrip) {
-                const currentTripEnd = new Date(trip.endDate || trip.startDate);
-                currentTripEnd.setHours(0, 0, 0, 0);
-                const nextTripStart = new Date(nextTrip.startDate);
-                nextTripStart.setHours(0, 0, 0, 0);
+                const currentTripEnd = trip.endDate || trip.startDate;
+                const nextTripStart = nextTrip.startDate;
                 
-                // We're at sea if today is after current trip ends and before next trip starts
-                isAtSea = today > currentTripEnd && today < nextTripStart;
+                if (currentTripEnd && nextTripStart) {
+                  const currentTripEndDate = new Date(currentTripEnd);
+                  currentTripEndDate.setHours(0, 0, 0, 0);
+                  const nextTripStartDate = new Date(nextTripStart);
+                  nextTripStartDate.setHours(0, 0, 0, 0);
+                  
+                  // We're at sea if today is after current trip ends and before next trip starts
+                  isAtSea = today > currentTripEndDate && today < nextTripStartDate;
+                }
               }
               
               return (

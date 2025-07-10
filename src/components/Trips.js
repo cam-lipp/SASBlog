@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import WaveBackground from './WaveBackground';
 import { useContentful, useSingleEntry } from '../hooks/useContentful';
-import { contentTypes, formatDateRange, isTripCurrent } from '../config/contentful';
+import { contentTypes, formatDateRange, isTripCurrent, safeDateParse } from '../config/contentful';
 import { getAllImageUrls, ImageGalleryComponent } from '../utils/imageUtils';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -300,8 +300,8 @@ const Trips = () => {
       date: formatDateRange(startDate, endDate),
       shortDescription: trip.fields.shortDescription,
       isCurrent,
-      startDate: new Date(startDate),
-      endDate: endDate ? new Date(endDate) : null
+      startDate: safeDateParse(startDate),
+      endDate: endDate ? safeDateParse(endDate) : null
     };
   }).sort((a, b) => a.startDate - b.startDate) : [];
 
@@ -346,8 +346,8 @@ const Trips = () => {
         shortDescription: singleTrip.fields.shortDescription,
         description: singleTrip.fields.description,
         isCurrent,
-        startDate: new Date(startDate),
-        endDate: endDate ? new Date(endDate) : null
+        startDate: safeDateParse(startDate),
+        endDate: endDate ? safeDateParse(endDate) : null
       };
 
     // Get all images for the trip

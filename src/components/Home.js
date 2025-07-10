@@ -5,7 +5,7 @@ import Newsletter from './Newsletter';
 import WaveBackground from './WaveBackground';
 import Hero from './Hero';
 import { useContentful } from '../hooks/useContentful';
-import { contentTypes, formatDateRange, isTripCurrent } from '../config/contentful';
+import { contentTypes, formatDateRange, isTripCurrent, safeDateParse } from '../config/contentful';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -26,6 +26,15 @@ const DestinationsSection = styled.section`
   backdrop-filter: blur(5px);
   margin: 2rem 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 0;
+  }
 `;
 
 const FilterTabs = styled.div`
@@ -33,6 +42,12 @@ const FilterTabs = styled.div`
   justify-content: center;
   gap: 1rem;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const FilterTab = styled.button`
@@ -49,6 +64,16 @@ const FilterTab = styled.button`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
   }
 `;
 
@@ -70,6 +95,16 @@ const SectionTitle = styled.h2`
     background: var(--gradient-ocean);
     border-radius: 2px;
   }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const StopsContainer = styled.div`
@@ -79,6 +114,17 @@ const StopsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const StopCard = styled(Link)`
@@ -94,6 +140,18 @@ const StopCard = styled(Link)`
 
   &:hover {
     transform: translateY(-5px);
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.2rem;
   }
   
   ${props => props.isCurrent && `
@@ -111,6 +169,15 @@ const StopCard = styled(Link)`
       padding: 5px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
+
+    @media (max-width: 768px) {
+      &::before {
+        font-size: 1.5rem;
+        top: -8px;
+        right: -8px;
+        padding: 3px;
+      }
+    }
   `}
 `;
 
@@ -121,6 +188,15 @@ const StopTitle = styled.h3`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StopDate = styled.p`
@@ -128,11 +204,29 @@ const StopDate = styled.p`
   font-weight: 500;
   margin-bottom: 1rem;
   font-size: 1.1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const StopDescription = styled.p`
   color: #4a5568;
   line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const TripStatus = styled.span`
@@ -239,8 +333,8 @@ const Home = () => {
       date: formatDateRange(startDate, endDate),
       shortDescription: trip.fields.shortDescription,
       isCurrent,
-      startDate: new Date(startDate),
-      endDate: endDate ? new Date(endDate) : null
+      startDate: safeDateParse(startDate),
+      endDate: endDate ? safeDateParse(endDate) : null
     };
   }).sort((a, b) => a.startDate - b.startDate) : fallbackStops; // Sort by start date
 

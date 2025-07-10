@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import WaveBackground from './WaveBackground';
 import { useContentful, useSingleEntry } from '../hooks/useContentful';
-import { contentTypes, formatDateRange } from '../config/contentful';
+import { contentTypes, formatDateRange, safeDateParse } from '../config/contentful';
 import { getAllImageUrls, getImageUrl, getImageAlt, ImageGalleryComponent } from '../utils/imageUtils';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -318,7 +318,11 @@ const Blog = () => {
         )}
         
         {blogPosts && blogPosts.length > 0 && blogPosts
-          .sort((a, b) => new Date(b.fields.date) - new Date(a.fields.date))
+          .sort((a, b) => {
+            const dateA = safeDateParse(a.fields.date);
+            const dateB = safeDateParse(b.fields.date);
+            return dateB - dateA;
+          })
           .map(post => (
           <BlogCard key={post.sys.id}>
             <BlogTitle>

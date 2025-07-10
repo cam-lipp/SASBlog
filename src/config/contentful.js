@@ -65,35 +65,78 @@ export const checkEmailExists = async (email) => {
   }
 };
 
+// Helper function to safely parse dates - ignores time and timezone, uses only the date part
+export const safeDateParse = (dateString) => {
+  if (!dateString) return null;
+  
+  // If it's already a Date object, extract the date part
+  if (dateString instanceof Date) {
+    const year = dateString.getFullYear();
+    const month = dateString.getMonth();
+    const day = dateString.getDate();
+    return new Date(year, month, day, 12, 0, 0); // Set to noon to avoid timezone issues
+  }
+  
+  // Extract just the date part (YYYY-MM-DD) from any string format
+  let dateOnly;
+  if (typeof dateString === 'string') {
+    // If it contains T (ISO format), take only the date part
+    dateOnly = dateString.split('T')[0];
+  } else {
+    dateOnly = dateString.toString().split('T')[0];
+  }
+  
+  // Parse the date parts
+  const [year, month, day] = dateOnly.split('-');
+  
+  // Create date in local timezone at noon to avoid any timezone shifting
+  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), 12, 0, 0);
+  
+  // Validate the date
+  if (isNaN(date.getTime())) {
+    console.error('Invalid date:', dateString);
+    return null;
+  }
+  
+  return date;
+};
+
 // Helper function to format date ranges
 export const formatDateRange = (startDate, endDate) => {
-  const start = new Date(startDate);
-  const end = endDate ? new Date(endDate) : null;
+  const start = safeDateParse(startDate);
+  const end = endDate ? safeDateParse(endDate) : null;
+  
+  if (!start) {
+    console.error('Invalid start date:', startDate);
+    return 'Invalid date';
+  }
   
   const options = { 
     month: 'short', 
-    day: 'numeric',
-    year: start.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+    day: 'numeric'
+    // No year - keep dates clean and consistent
   };
   
   if (!end || start.toDateString() === end.toDateString()) {
     return start.toLocaleDateString('en-US', options);
   }
   
-  // If same month, show "Sep 15-17, 2024"
+  // If same month, show "Sep 15-17"
   if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
-    return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}-${end.getDate()}, ${start.getFullYear()}`;
+    return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}-${end.getDate()}`;
   }
   
-  // Different months: "Sep 15 - Oct 2, 2024"
+  // Different months: "Sep 15 - Oct 2"
   return `${start.toLocaleDateString('en-US', options)} - ${end.toLocaleDateString('en-US', options)}`;
 };
 
 // Helper function to check if a trip is currently happening
 export const isTripCurrent = (startDate, endDate) => {
   const now = new Date();
-  const start = new Date(startDate);
-  const end = endDate ? new Date(endDate) : start;
+  const start = safeDateParse(startDate);
+  const end = endDate ? safeDateParse(endDate) : start;
+  
+  if (!start) return false;
   
   // Set time to start of day for comparison
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());

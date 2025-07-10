@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Home from './components/Home';
-import CabinLife from './components/CabinLife';
 import Itinerary from './components/Itinerary';
 import Trips from './components/Trips';
 import Blog from './components/Blog';
@@ -30,7 +29,6 @@ function App() {
         <MainContent>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/cabin-life" element={<CabinLife />} />
             <Route path="/itinerary" element={<Itinerary />} />
             <Route path="/trips" element={<Trips />} />
             <Route path="/trips/:tripId" element={<Trips />} />

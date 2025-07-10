@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--light-blue);
+    overflow-x: hidden; /* Prevent horizontal scroll */
   }
 
   button {
